@@ -1,34 +1,41 @@
 {
-  "log": {
-    "level": "info"
-  },
   "inbounds": [
     {
       "type": "vless",
-      "tag": "vless-in",
+      "tag": "in-vless",
       "listen": "127.0.0.1",
-      "listen_port": 3001,
+      "port": 12345,
+      "sniff": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
       "users": [
         {
-          "uuid": "de3eca5d-7c3a-4a57-aede-51f5ab1c82b9",
-          "flow": "",
-          "level": 0,
-          "email": "user@example.com"
+          "id": "de3eca5d-7c3a-4a57-aede-51f5ab1c82b9",
+          "flow": "xtls-rprx-vision"
         }
       ],
       "transport": {
-        "type": "ws",
-        "path": "/vless"
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
       }
     }
   ],
   "outbounds": [
     {
-      "type": "direct"
-    },
-    {
-      "type": "block",
-      "tag": "block"
+      "type": "freedom",
+      "tag": "out-freedom"
     }
-  ]
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": ["in-vless"],
+        "outboundTag": "out-freedom"
+      }
+    ]
+  }
 }

@@ -1,7 +1,10 @@
 :443 {
-  encode gzip
-  reverse_proxy /vless 127.0.0.1:3001 {
-    header_up Host {host}
-  }
-  tls internal
+    tls internal
+
+    reverse_proxy /vless localhost:12345 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
 }
