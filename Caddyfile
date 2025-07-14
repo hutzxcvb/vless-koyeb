@@ -1,0 +1,7 @@
+:443 {
+  encode gzip
+  reverse_proxy /vless 127.0.0.1:3001 {
+    header_up Host {host}
+  }
+  tls internal
+}
