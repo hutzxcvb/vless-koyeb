@@ -1,7 +1,13 @@
+:8080 {
+    # HTTP 重定向到 HTTPS
+    redir https://{host}{uri} permanent
+}
+
 :443 {
     tls internal
 
-    reverse_proxy /vless localhost:12345 {
+    # 反代 sing-box WebSocket 服务
+    reverse_proxy /vless localhost:8080 {
         header_up Host {host}
         header_up X-Real-IP {remote_host}
         header_up X-Forwarded-For {remote_host}

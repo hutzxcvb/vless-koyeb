@@ -15,12 +15,11 @@ RUN curl -L -o /tmp/sing-box.tar.gz https://github.com/SagerNet/sing-box/release
 RUN curl -L -o /usr/local/bin/caddy https://github.com/caddyserver/caddy/releases/download/${CADDY_VER}/caddy_${CADDY_VER}_linux_amd64 && \
     chmod +x /usr/local/bin/caddy
 
-# 添加配置文件
 COPY config.json /etc/sing-box/config.json
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 443 80
+EXPOSE 80 443 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
